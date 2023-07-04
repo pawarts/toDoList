@@ -1,0 +1,43 @@
+
+.sub_task_wrapper{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin: 16px 0;
+    max-height: 74px;
+    overflow-y: scroll;
+}
+
+.sub_task_wrapper .sub_task_item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 312px;
+    font-size: 14px;
+}
+
+.sub_task_wrapper .sub_task_item:not(:first-child){
+    margin-top: 7px;
+}
+
+.sub_task_wrapper .add_sub_task_input{
+    width: 284px;
+    border-bottom: 1px solid #000000;
+    background: rgba(248, 248, 248, 0.97);
+    padding-left: 8px;
+    padding-bottom: 3px;
+}
+
+.sub_task_wrapper .add_sub_task_input, .add_sub_task_input::placeholder{
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.delete_task{
+    cursor: pointer;
+}
+
+.sub_open{
+    display: flex;
+}

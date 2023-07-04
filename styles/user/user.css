@@ -1,0 +1,9 @@
+body{
+    overflow: hidden;
+}
+
+.user_wrapper{
+    padding-left: 22px;
+    margin-top: 106px;
+    height: 81vh;
+}

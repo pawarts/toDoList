@@ -1,0 +1,87 @@
+<div class="group_wrapper">
+    <img src="../.././images/icons/filter.svg" alt="" class="group_item_img" id="filter_btn">
+    <ul class="filter_items" id="filter_group">
+        <li class="filter_item">Усе</li>
+        <li class="filter_item">Мої цілі</li>
+        <li class="filter_item">Мій розклад</li>
+        <li class="filter_item">Мої списки</li>
+        <li class="filter_item">Мої списки</li>
+        <li class="filter_item">Мої списки</li>
+        <li class="filter_item">Мої списки</li>
+    </ul>
+    <ul class="group_items" id="group_items">
+
+        <% group_title_array.forEach((element, index) => {%>
+
+            <%if(index !=0){%>
+                <li class="group_item <% if(id === element.title){%>active<%}%>">
+                    <a href="<%- element.title %>" class="group_link group_text"><%- element.title %></a>
+                </li>
+            <%}%>
+        <%}) %>
+
+        <li class="group_item">
+            <span class="group_link group_text" id="group_input-btn">Створити групу</span>
+            <form class="group_input-wrapper" action="/add_group" method="POST" id="group_input">
+                <input class="group_input" type="text" name="group_name">
+                <button type="submit">
+                    <img src="../../images/navigation_block/add_noactive.svg" alt="">
+                </button>
+            </form>
+        </li>
+
+    </ul>
+</div>
+
+<div class="work_wrapper">
+
+
+        <ul class="work_items">
+            <% if(work_array.length != 0){%>
+                <% work_array.forEach( (element) => {%>
+                <li class="work_item">
+                    <p class="work_time"><%- element.time %></p>
+                    <p class="work_time"><%- element.title%></p>
+                </li>
+                <%if(sub_work_object[0].subwork_title != null ){%>
+                    <form action="/update_subwork" class="sub_work_items">
+                        <%sub_work_object.forEach(subwork => {%>
+                            <%if(subwork.id === element.id){%>
+                                <div class="sub_work_item">
+                                    <p class="sub_work_title"><%- subwork.subwork_title %></p>
+                                    <div class="check_wrapper">
+                                        <input class="input_checkbox" type="checkbox"/>
+                                        <div class="checkbox_uncheck"></div>
+                                    </div>
+                                </div>
+                            <%}%>
+                        <%})%>
+                    </form>
+                <% } %>
+            <% }) %>
+            <% } else {%>
+                <div class="empty_wrapper">
+                    <h2>Ця група, поки пуста</h2>
+
+                    <img src="../../images/empty_box/116469-no-item-in-box.gif" width="300" height="300" alt="">
+
+                    <p class="add_task_page" id="add_task_page">Хочете додати завдання?</p>
+                </div>
+            <%}%>
+        </ul>
+
+        <div class="context_menu-wrapper">
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+        </div>
+</div>
