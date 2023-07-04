@@ -1,0 +1,33 @@
+<%- include('./parts/file_header.ejs')%>
+<link rel="stylesheet" href="../styles/do_list/do_list.css">
+<link rel="stylesheet" href="../styles/do_list/empty_list.css">
+<link rel="stylesheet" href="../styles/search.css">
+</head>
+<body>
+    <div class="wrapper">
+
+        <header class="header search_header">
+            <img src="../images/search_block/close_search_block.svg" alt="" class="close_search_block" id="close_search_block">
+            <form method="GET" action="" class="search_form">
+                <input type="text" class="search_input" placeholder="Пошук" name="search" id="search_input">
+            </form>
+
+            <div class="search_result-wrapper" id="search_result">
+                <p class="search_output" id="search_output"></p>
+            </div>
+        </header>
+
+        <%- include("./parts/to_do_list.ejs")%>
+
+        <%- include("./parts/navigation_bar/nav.ejs")%>
+    </div>
+</body>
+<%- include("./parts/end.ejs") %>
+
+<script src="../scripts/checkbox/checkbox.js"></script>
+<script src="../scripts/checkbox/checkbox_context_menu.js"></script>
+
+<!--<script src="../scripts/search.js"></script>-->
+<script src="../scripts/group/group.js"></script>
+
+</html>

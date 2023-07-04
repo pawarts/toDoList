@@ -1,0 +1,51 @@
+<%- include('./parts/file_header.ejs')%>
+<link rel="stylesheet" href="../styles/notification.css">
+</head>
+<body>
+   <div class="wrapper">
+       <%-include("./parts/header.ejs")%>
+
+       <div class="wrapper_notifications">
+           <div class="wrapper_notification">
+               <p class="notification_img"></p>
+               <div class="notification_text_wrapper">
+                   <p class="notification_login">Rykachevskyi Alex</p>
+                   <p class="notification_text">Може погуляємо?</p>
+                   <p class="notification_date">ПТ, 23 Грудня, 14:30</p>
+               </div>
+               <div class="notification_button_wrapper">
+                   <button class="agree_btn">Прийняти</button>
+                   <button class="cancel_btn">Відмінити</button>
+               </div>
+           </div>
+           <div class="wrapper_notification">
+               <p class="notification_img"></p>
+               <div class="notification_text_wrapper">
+                   <p class="notification_login">Daddy</p>
+                   <p class="notification_text">Зроби чаю</p>
+                   <p class="notification_date">ПТ, 23 Грудня, 14:30</p>
+               </div>
+               <div class="notification_button_wrapper">
+                   <button class="agree_btn">Прийняти</button>
+                   <button class="cancel_btn">Відмінити</button>
+               </div>
+           </div>
+           <div class="wrapper_notification">
+               <p class="notification_img"></p>
+               <div class="notification_text_wrapper">
+                   <p class="notification_login">Mommy</p>
+                   <p class="notification_text">Я не зможу на 12:00, давай на 14:00</p>
+                   <p class="notification_date">ПТ, 23 Грудня, 14:30</p>
+               </div>
+               <div class="notification_button_wrapper">
+                   <button class="agree_btn">Прийняти</button>
+                   <button class="cancel_btn">Відмінити</button>
+               </div>
+           </div>
+       </div>
+
+       <%- include("./parts/navigation_bar/nav.ejs")%>
+   </div>
+</body>
+<%- include("./parts/end.ejs") %>
+</html>

@@ -1,0 +1,30 @@
+<%- include('./parts/file_header.ejs')%>
+<link rel="stylesheet" href="../../styles/nullystyle.css">
+<link rel="stylesheet" href="../styles/login.css">
+<body>
+<div class="login_wrapper">
+    <h1 class="login_title">Реєстрація</h1>
+    <form action="/reg" method="post" class="form_wrap">
+        <div class="input_wrap">
+            <div class="input_items">
+                <input type="text" class="form_input" name="login" placeholder="Введіть ім'я користувача">
+            </div>
+            <div class="input_items">
+                <input type="email" class="form_input" name="email" placeholder="Пошта">
+            </div>
+            <div class="input_items">
+                <input type="text" class="form_input" name="password" placeholder="Пароль">
+                <input type="text" class="form_input" name="password" placeholder="Повторіть пароль">
+            </div>
+
+        </div>
+
+        <button type="submit" class="sub_btn">Зареєструватись</button>
+
+    </form>
+    <footer class="login_footer">
+        <p class="login_footer_title">Вже маєте акаунт?&nbsp;</p>
+        <a href="/log" class="login_footer_link">Увійти</a>
+    </footer>
+</div>
+</body>

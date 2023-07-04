@@ -1,0 +1,26 @@
+<%- include('./parts/file_header.ejs')%>
+<link rel="stylesheet" href="../../styles/nullystyle.css">
+<link rel="stylesheet" href="../styles/login.css">
+<body>
+<div class="login_wrapper">
+    <h1 class="login_title">Увійти</h1>
+    <form action="" method="POST" class="form_wrap">
+        <div class="input_wrap">
+
+            <input type="text" class="form_input" name="name" placeholder="Логін">
+            <input type="password" class="form_input" name="password" placeholder="Пароль">
+
+            <a href="" class="hint_link">Забули пароль?</a>
+
+        </div>
+
+        <button type="submit" class="sub_btn">Увійти</button>
+
+    </form>
+    <footer class="login_footer">
+        <p class="login_footer_title">Ще не маєш акаунту?&nbsp;</p>
+        <a href="/reg" class="login_footer_link">Зареєструватись</a>
+    </footer>
+</div>
+</body>
+</html>
