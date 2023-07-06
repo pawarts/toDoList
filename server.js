@@ -137,11 +137,11 @@ app.use(express.urlencoded({extended: false}))
 
 //Create connection with database
 const conn = mysql.createConnection({
-    host: 'bdggdjleav5h8tiutuau-mysql.services.clever-cloud.com',
-    databases: 'bdggdjleav5h8tiutuau',
-    user: 'ubjexexfaxzdm2zy',
-    password: '4ZH5LIG1Dw1mNTMcwcs1',
-    port: 3306,
+    host: 'b3afpl13xoea4hd5vw9r-mysql.services.clever-cloud.com',
+    databases: 'b3afpl13xoea4hd5vw9r',
+    user: 'u9dkrgs0xzzlgt8w',
+    password: 'vpCzcYsIEFO7OnSQdBtA',
+    port: 3306
 })
 
 conn.connect(err => {
@@ -161,8 +161,8 @@ function request_result (id, res, req, file_name) {
     let query = `
     SELECT GROUP_CONCAT( DISTINCT groups.group_title) AS group_title, groups.id, work.group_id, work.id AS work_id, work.work_title, work.work_time,
     GROUP_CONCAT(subwork.subwork_title) AS subwork_title, GROUP_CONCAT(subwork.id) AS subwork_id
-    FROM just_do_it.groups LEFT JOIN just_do_it.work ON groups.id = work.group_id
-    LEFT JOIN just_do_it.subwork ON work.id = subwork.work_id
+    FROM b3afpl13xoea4hd5vw9r.groups LEFT JOIN b3afpl13xoea4hd5vw9r.work ON groups.id = work.group_id
+    LEFT JOIN b3afpl13xoea4hd5vw9r.subwork ON work.id = subwork.work_id
     WHERE groups.user_id = '${user_id}'
     GROUP BY groups.group_title, groups.id, work.work_title, work.work_time, work.id 
     ORDER BY work.work_time
@@ -213,8 +213,10 @@ function request_result (id, res, req, file_name) {
             group_title.splice(0, 1)
 
             res.cookie('groups', group_title)
-            if(group_title[1] !== null){
-                res.cookie('first_group', group_title[1].title)
+
+            if(group_title[0] !== null && group_title[0] !== undefined){
+                console.log(group_title[0].title)
+                res.cookie('first_group', group_title[0].title)
             } else {
                 res.cookie('first_group', '0')
             }
@@ -239,7 +241,7 @@ function request_result (id, res, req, file_name) {
 
 function subwork(work_id, element){
     console.log(element)
-    let sub_insert_query = `INSERT INTO ${`just_do_it.subwork`} (${`id`}, ${`work_id`}, ${`subwork_title`}, ${`subwork_status`}) VALUES (NULL, ${work_id}, '${element}', 0);`
+    let sub_insert_query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.subwork`} (${`id`}, ${`work_id`}, ${`subwork_title`}, ${`subwork_status`}) VALUES (NULL, ${work_id}, '${element}', 0);`
 
     conn.query(sub_insert_query, (error) => {
         if(error){
@@ -259,7 +261,7 @@ app.post('/log',(req, res) => {
 
     const {name, password} = req.body
 
-    let query = `SELECT  *  FROM ${`just_do_it.users`} WHERE login =  ? AND password = ?`
+    let query = `SELECT  *  FROM ${`b3afpl13xoea4hd5vw9r.users`} WHERE login =  ? AND password = ?`
     conn.query(query, [name, password], (err, result) =>{
         if(Array.isArray(result) && result.length > 0){
             res.cookie('name', result[0].login)
@@ -289,7 +291,7 @@ app.post('/reg', (req, res) => {
     if(password[0] !== password[1]){
         res.redirect('/reg')
     } else {
-        let insert = `INSERT INTO ${`just_do_it.users`} (${`id`}, ${`login`}, ${`password`}, ${`email`}) VALUES (NULL, '${login}', '${password[0]}', '${email}')`
+        let insert = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.users`} (${`id`}, ${`login`}, ${`password`}, ${`email`}) VALUES (NULL, '${login}', '${password[0]}', '${email}')`
 
         conn.query(insert, (error) => {
             if(!error){
@@ -375,13 +377,13 @@ app.post('/add_work', async(req, res) =>{
     const user_id = req.cookies.id;
     let subtask = body.sub_task_element;
 
-    let select_group_for_id = `SELECT groups.id FROM just_do_it.groups INNER JOIN just_do_it.users ON groups.user_id = users.id WHERE groups.group_title = '${work_group}' AND users.id = '${user_id}'`;
+    let select_group_for_id = `SELECT groups.id FROM b3afpl13xoea4hd5vw9r.groups INNER JOIN b3afpl13xoea4hd5vw9r.users ON groups.user_id = users.id WHERE groups.group_title = '${work_group}' AND users.id = '${user_id}'`;
 
     conn.query(select_group_for_id, (err, result) => {
         group_id = result[0].id;
         if(!err && group_id !== undefined){
 
-            let query = `INSERT INTO ${`just_do_it.work`} (${`id`}, ${`group_id`}, ${`work_title`}, ${`work_time`}) VALUES (NULL, ${group_id}, '${work_title}', '${work_time}');`;
+            let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.work`} (${`id`}, ${`group_id`}, ${`work_title`}, ${`work_time`}) VALUES (NULL, ${group_id}, '${work_title}', '${work_time}');`;
 
             conn.query(query, (error) => {
                 if(!error){
@@ -393,7 +395,7 @@ app.post('/add_work', async(req, res) =>{
             })
 
             if(subtask){
-                let select_query = `SELECT id FROM ${`just_do_it.work`} ORDER BY \`work\`.\`id\` DESC LIMIT 1`;
+                let select_query = `SELECT id FROM ${`b3afpl13xoea4hd5vw9r.work`} ORDER BY \`work\`.\`id\` DESC LIMIT 1`;
                 let work_id = 0;
                 conn.query(select_query, (error, result) => {
                     if(error){
@@ -430,7 +432,7 @@ app.post('/add_work', async(req, res) =>{
 
     let user_id = req.cookies.id
 
-    let query = `INSERT INTO ${`just_do_it.groups`} (${`id`}, ${`user_id`}, ${`group_title`}) VALUES (NULL, ${user_id}, '${group_title}')`;
+    let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.groups`} (${`id`}, ${`user_id`}, ${`group_title`}) VALUES (NULL, ${user_id}, '${group_title}')`;
     conn.query(query, (err) => {
         if(err){
             console.log(err);
@@ -465,7 +467,7 @@ app.post('/delete_sub_task', (req, res) => {
     if(!Array.isArray(subtask_id) || subtask_id.length - delete_queue.length === 0){
         console.log('reb')
         const work_id = body.work_id;
-        const delete_query = `DELETE FROM \`just_do_it\`.\`work\` WHERE \`work\`.\`id\` = ${work_id}`
+        const delete_query = `DELETE FROM \`b3afpl13xoea4hd5vw9r\`.\`work\` WHERE \`work\`.\`id\` = ${work_id}`
 
         conn.query(delete_query, (error, result) => {
             if(error){
@@ -478,7 +480,7 @@ app.post('/delete_sub_task', (req, res) => {
 
         Number(element)
 
-        const delete_query = `DELETE FROM \`just_do_it\`.\`subwork\` WHERE \`subwork\`.\`id\` = ${element}`
+        const delete_query = `DELETE FROM \`b3afpl13xoea4hd5vw9r\`.\`subwork\` WHERE \`subwork\`.\`id\` = ${element}`
 
         conn.query(delete_query, (error, result) => {
             if(error){
