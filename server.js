@@ -135,6 +135,7 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({extended: false}))
 
+
 //Create connection with database
 const conn = mysql.createConnection({
     host: 'b3afpl13xoea4hd5vw9r-mysql.services.clever-cloud.com',
@@ -159,16 +160,17 @@ function request_result (id, res, req, file_name) {
     console.log(`User: ${login}\nID:${user_id}`)
 
     let query = `
-    SELECT GROUP_CONCAT( DISTINCT groups.group_title) AS group_title, groups.id, work.group_id, work.id AS work_id, work.work_title, work.work_time,
+    SELECT GROUP_CONCAT( DISTINCT groups.group_title) AS group_title, groups.id, work.group_id, work.id AS work_id, work.work_title, work.work_time, work.work_date,
     GROUP_CONCAT(subwork.subwork_title) AS subwork_title, GROUP_CONCAT(subwork.id) AS subwork_id
     FROM b3afpl13xoea4hd5vw9r.groups LEFT JOIN b3afpl13xoea4hd5vw9r.work ON groups.id = work.group_id
     LEFT JOIN b3afpl13xoea4hd5vw9r.subwork ON work.id = subwork.work_id
     WHERE groups.user_id = '${user_id}'
-    GROUP BY groups.group_title, groups.id, work.work_title, work.work_time, work.id 
+    GROUP BY groups.group_title, groups.id, work.work_title, work.work_time, work.id, work.work_date
     ORDER BY work.work_time
     `;
 
     let work = [];
+    let work_date = [];
     let group_title = [[]];
 
     conn.query(query, (err, result) => {
@@ -192,6 +194,10 @@ function request_result (id, res, req, file_name) {
                         'subworks': element.subwork_title !== null ? element.subwork_title.split(',') : '',
                         'id_subworks': element.subwork_title !== null ? element.subwork_id.split(',') : '',
                     })
+                }
+
+                if(!work_date.includes(element.work_date)){
+                    work_date.push(element.work_date)
                 }
             })
 
@@ -227,7 +233,7 @@ function request_result (id, res, req, file_name) {
             if(req.cookies.name === undefined || req.cookies.id === undefined){
                 res.redirect(`/log`);
             } else {
-                res.render(createPath(file_name), {id, group_title, work, emptyGroup, login, opened_group});
+                res.render(createPath(file_name), {id, group_title, work, emptyGroup, login, opened_group, work_date});
             }
 
         } else {
@@ -330,6 +336,13 @@ app.get('/user', (req, res) => {
     res.render(createPath('user'), { login, group_title, opened_group });
 })
 
+app.get('/user/changelog', (req, res) => {
+    const login = req.cookies.name
+    let group_title = req.cookies.groups;
+    const opened_group = req.cookies.opened_group
+    res.render(createPath('changelog'), { login, group_title, opened_group })
+})
+
 
 //Main page
 
@@ -369,10 +382,11 @@ app.post('/add_work', async(req, res) =>{
     console.log("ID:" + work_group);
 
     const work_time = body.time;
+    const work_date = body.calendar;
 
     let group_id;
 
-    console.log(body.sub_task_element)
+
 
     const user_id = req.cookies.id;
     let subtask = body.sub_task_element;
@@ -383,7 +397,9 @@ app.post('/add_work', async(req, res) =>{
         group_id = result[0].id;
         if(!err && group_id !== undefined){
 
-            let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.work`} (${`id`}, ${`group_id`}, ${`work_title`}, ${`work_time`}) VALUES (NULL, ${group_id}, '${work_title}', '${work_time}');`;
+            console.log(`Set date: ` + work_date)
+
+            let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.work`} (${`id`}, ${`group_id`}, ${`work_title`}, ${`work_time`}, ${`work_date`}) VALUES (NULL, ${group_id}, '${work_title}', '${work_time}', '${work_date}');`;
 
             conn.query(query, (error) => {
                 if(!error){
