@@ -1,9 +1,65 @@
 body{
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .user_wrapper{
     padding-left: 22px;
+    padding-right: 22px;
     margin-top: 106px;
     height: 81vh;
+}
+
+.group_links{
+    margin-bottom: 80px;
+}
+
+.user_link{
+    display: flex;
+    justify-content: space-between;
+}
+
+.user_window_title{
+    font-size: 21px;
+    font-weight: 500;
+    margin: 40px 0 75px 30px;
+}
+
+.change_wrapper{
+    margin: 50px 30px 0 30px;
+}
+
+.change_subtitle{
+    margin: 30px 0;
+}
+
+.change_list_item{
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 10px;
+    margin-left: 11px;
+}
+
+.change_list_item::before{
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: -11px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #000000;
+}
+
+.change_wrapper:first-child{
+    margin-top: 75px;
+}
+
+.change_text{
+    font-size: 16px;
+}
+
+.change_date{
+    font-size: 19px;
+    font-weight: 500;
 }
