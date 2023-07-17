@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="group_wrapper">
     <img src="../.././images/icons/filter.svg" alt="" class="group_item_img" id="filter_btn">
     <ul class="filter_items" id="filter_group">
@@ -102,4 +103,105 @@
                 <p class="context_menu-text">Копіювати</p>
             </div>
         </div>
+=======
+<div class="group_wrapper">
+    <img src="../.././images/icons/filter.svg" alt="" class="group_item_img" id="filter_btn">
+    <ul class="filter_items" id="filter_group">
+        <li class="filter_item">Усе</li>
+        <li class="filter_item">Мої цілі</li>
+        <li class="filter_item">Мій розклад</li>
+        <li class="filter_item">Мої списки</li>
+        <li class="filter_item">Мої списки</li>
+        <li class="filter_item">Мої списки</li>
+        <li class="filter_item">Мої списки</li>
+    </ul>
+    <ul class="group_items" id="group_items">
+
+        <% group_title.forEach((element, index) => {%>
+
+            <li class="group_item <% if(id === element.title){%>active<%}%>">
+                <a href="<%- element.title %>" class="group_link group_text"><%- element.title %></a>
+            </li>
+
+        <%}) %>
+
+        <li class="group_item">
+            <span class="group_link group_text" id="group_input-btn">Створити групу</span>
+            <form class="group_input-wrapper" action="/add_group" method="POST" id="group_input">
+                <input class="group_input" maxlength="15" type="text" id="create_group_input" name="group_name">
+                <button type="submit">
+                    <img src="../../images/navigation_block/add_noactive.svg" alt="">
+                </button>
+            </form>
+        </li>
+
+    </ul>
+</div>
+
+<div class="work_wrapper">
+
+
+        <ul class="work_items">
+            <!--<% if(work_date.length !== 0){%>
+                <p><%- work_date%></p>
+            <% } %>-->
+            <% if(emptyGroup){%>
+                <% work.forEach( (element) => {%>
+                    <% if(element.group_id === id){ %>
+
+                            <li class="work_item">
+                                <p class="work_time work_times"><%- element.time %></p>
+                                <p class="work_time"><%- element.title%></p>
+                            </li>
+
+                            <%if(element.subworks != 0){%>
+                            <div class="sub_work_items">
+                                <form action="/delete_sub_task" method="POST">
+                                    <%element.subworks.forEach((subwork, index) => {%>
+                                        <input type="hidden" value="<%- element.id_subworks[index]%>" name="subtask_id">
+                                        <div class="sub_work_item">
+                                            <p class="sub_work_title"><%- subwork %></p>
+                                            <div class="check_wrapper">
+                                                <input class="input_checkbox" name="checker" value="<%- element.id_subworks[index]%>" type="checkbox"/>
+                                                <input name="checker" value="off" type="hidden"/>
+                                                <div class="checkbox_uncheck"></div>
+                                            </div>
+                                        </div>
+                                    <%})%>
+                                    <input type="hidden" name="work_id" value="<%- element.id%>">
+                                    <button class="delete_submit">Підтвердити</button>
+                                </form>
+                        </div>
+                            <% } %>
+
+                    <% } %>
+
+                <% }) %>
+
+            <% } else {%>
+                <div class="empty_wrapper">
+                    <h2>Ця група, поки пуста</h2>
+
+                    <img src="../../images/empty_box/116469-no-item-in-box.gif" width="300" height="300" alt="">
+
+                    <p class="add_task_page" id="add_task_page">Хочете додати завдання?</p>
+                </div>
+            <%}%>
+        </ul>
+
+        <div class="context_menu-wrapper">
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+            <div class="context_menu-items">
+                <p class="context_menu-text">Копіювати</p>
+            </div>
+        </div>
+>>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
 </div>

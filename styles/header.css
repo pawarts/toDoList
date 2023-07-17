@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .header
 {
     position: absolute;
@@ -31,4 +32,32 @@
 .header_img-arrow
 {
     width: 19px;
+=======
+.header
+{
+    position: absolute;
+    top: 25px;
+    left: 22px;
+    display: inline-flex;
+    align-items: center;
+}
+.header .header_title
+{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    margin: 0 18px 1px 18px;
+}
+
+.header_title-date
+{
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 9px;
+}
+
+.header_img-arrow
+{
+    width: 19px;
+>>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
 }

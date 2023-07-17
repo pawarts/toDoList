@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%- include('./parts/file_header.ejs')%>
 <link rel="stylesheet" href="../styles/user/user.css">
 </head>
@@ -19,4 +20,27 @@
     <%- include("./parts/navigation_bar/nav.ejs")%>
 </body>
 <%- include('./parts/end.ejs')%>
+=======
+<%- include('./parts/file_header.ejs')%>
+<link rel="stylesheet" href="../styles/user/user.css">
+</head>
+<body>
+    <%- include("./parts/header.ejs")%>
+
+    <div class="user_wrapper">
+
+        <div class="group_links">
+            <a href="/user/changelog" class="user_link">
+                <p class="user_link_text">Список змін</p>
+                <img src="../images/user_page/icon/changelog_icon.svg" alt="" class="user_link_img">
+            </a>
+        </div>
+
+        <a href="/exit">Вийти</a>
+    </div>
+
+    <%- include("./parts/navigation_bar/nav.ejs")%>
+</body>
+<%- include('./parts/end.ejs')%>
+>>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
 </html>
