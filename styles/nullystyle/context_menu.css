@@ -16,3 +16,10 @@
 .context_menu-wrapper .context_menu-items .context_menu-text{
     font-size: 13px;
 }
+
+#groups_contextmenu{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

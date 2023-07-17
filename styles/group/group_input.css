@@ -13,5 +13,10 @@
 
 .group_input{
     max-height: 21px;
-    width: 15px;
+    width: 21px;
+    border: 1px solid #000000;
+}
+
+.group_input-wrapper button{
+    cursor: pointer;
 }

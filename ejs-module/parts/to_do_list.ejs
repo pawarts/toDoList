@@ -15,14 +15,18 @@
 
             <li class="group_item <% if(id === element.title){%>active<%}%>">
                 <a href="<%- element.title %>" class="group_link group_text"><%- element.title %></a>
+                <form action="DELETE" class="context_menu" id="groups_contextmenu">
+                    <input type="hidden" value="<%- element.id%>">
+                    <button id="button_delete_group">Видалити</button>
+                </form>
             </li>
 
         <%}) %>
 
         <li class="group_item">
             <span class="group_link group_text" id="group_input-btn">Створити групу</span>
-            <form class="group_input-wrapper" action="/add_group" method="POST" id="group_input">
-                <input class="group_input" maxlength="15" type="text" id="create_group_input" name="group_name">
+            <form class="group_input-wrapper" action="/add_group" method="POST" id="create_group_form">
+                <input class="group_input" maxlength="15" type="text" id="create_group_input" name="group_name" id="create_group_input" required>
                 <button type="submit">
                     <img src="../../images/navigation_block/add_noactive.svg" alt="">
                 </button>
@@ -34,14 +38,16 @@
 
 <div class="work_wrapper">
 
-
         <ul class="work_items">
-            <!--<% if(work_date.length !== 0){%>
-                <p><%- work_date%></p>
-            <% } %>-->
             <% if(emptyGroup){%>
-                <% work.forEach( (element) => {%>
-                    <% if(element.group_id === id){ %>
+
+                    <% work.forEach( (element) => {%>
+
+                        <% if(element.group_id === id){ %>
+
+                            <% if (element.date !== null){%>
+                                <p class="work_date"><%- `${element.date.split(' ')[0]}, ${element.date.split(' ')[1]} ${element.date.split(' ')[2]}`%></p>
+                            <%}%>
 
                             <li class="work_item">
                                 <p class="work_time work_times"><%- element.time %></p>
@@ -65,13 +71,12 @@
                                     <input type="hidden" name="work_id" value="<%- element.id%>">
                                     <button class="delete_submit">Підтвердити</button>
                                 </form>
-                        </div>
+                            </div>
                             <% } %>
 
-                    <% } %>
+                        <% } %>
 
-                <% }) %>
-
+                    <% }) %>
             <% } else {%>
                 <div class="empty_wrapper">
                     <h2>Ця група, поки пуста</h2>

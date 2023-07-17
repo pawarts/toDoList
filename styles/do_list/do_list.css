@@ -1,5 +1,4 @@
 .group_wrapper{
-    position: relative;
     display: flex;
     padding-left: 22px;
     margin-top: 106px;
@@ -179,4 +178,14 @@
     background: #000;
     color: #ffffff;
     border-radius: 4px;
+}
+
+.work_date{
+    padding-left: 22px;
+    margin-bottom: 22px;
+    font-weight: 600;
+}
+
+.work_date:not(:first-child){
+    margin-top: 50px;
 }

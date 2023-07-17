@@ -20,7 +20,6 @@ const toggleAddBlock = () =>{
     add_img[index_count].classList.remove("show_cross");
 
     index_count === 0 ? index_count++ : index_count--;
-    console.log(add_img[index_count])
 
     add_img[index_count].classList.add("show_cross");
 
@@ -73,28 +72,6 @@ for(let i = 0; i < navListLink.length; i++){
         navListImg[0].classList.add("no_active_icon");
     }
 }
-
-
-console.log(location.pathname.slice(1).includes("/"))
-
-//open or close time work
-
-//connect button
-let button_time = document.getElementById("button_time");
-let button_cancel = document.getElementById("button_cancel");
-let set_time_block = document.getElementById("set_time_block");
-
-//connect addEventListener to button_time
-
-//open block by alarm button
-button_time.addEventListener("click", () => {
-    set_time_block.classList.remove("open_block");
-})
-
-//close block by button cancel
-button_cancel.addEventListener("click", () => {
-    set_time_block.classList.add("open_block");
-})
 
 
 

@@ -152,6 +152,24 @@ conn.connect(err => {
 
 //Functions
 
+function arrayIncludesCondition ( array, includes){
+
+    const group_id = includes.group_id;
+    const date = includes.work_date;
+
+    for(let index in array){
+        const array_group_id = array[index].group_id;
+        const array_date = array[index].work_date;
+
+        if(group_id === array_group_id && date === date){
+            return true
+        }
+
+    }
+
+    return false
+}
+
 function request_result (id, res, req, file_name) {
 
     let login = req.cookies.name;
@@ -176,6 +194,7 @@ function request_result (id, res, req, file_name) {
     conn.query(query, (err, result) => {
         if(!err){
             result.forEach((element) => {
+
                 if(!group_title[0].includes(element.id)){
                     group_title.push({
                         id: element.id,
@@ -186,18 +205,31 @@ function request_result (id, res, req, file_name) {
                 }
 
                 if(!work.includes(element.work_title)){
+                   //console.log(work_date.includes(element.work_date))
                     work.push({
                         'id': element.work_id,
                         'group_id': element.group_title,
                         'title': element.work_title,
                         'time': element.work_time,
+                        'date': arrayIncludesCondition(work_date, {
+                                "group_id": element.group_id,
+                                "work_date": String(element.work_date)
+                            }) ? null : String(element.work_date),
                         'subworks': element.subwork_title !== null ? element.subwork_title.split(',') : '',
                         'id_subworks': element.subwork_title !== null ? element.subwork_id.split(',') : '',
                     })
                 }
 
-                if(!work_date.includes(element.work_date)){
-                    work_date.push(element.work_date)
+                if(!arrayIncludesCondition(work_date, {
+                    "group_id": element.group_id,
+                    "work_date": String(element.work_date)
+                }) && element.work_date !== null){
+
+                    work_date.push({
+                        "group_id": element.group_id,
+                        "work_date": String(element.work_date)
+                    })
+
                 }
             })
 
@@ -207,8 +239,8 @@ function request_result (id, res, req, file_name) {
 
                 const item = work[i]
 
-                if((item.group_id === id && item.title !== null) || id === '0'){
-                    if(item.subworks !== [] || id === '0'){
+                if((item.group_id === id && item.title !== null)){
+                    if(item.subworks !== []){
 
                         emptyGroup = true
                         break
@@ -229,11 +261,22 @@ function request_result (id, res, req, file_name) {
             res.cookie('opened_group', id)
 
             const opened_group = req.cookies.opened_group
+            const empty_string_failed = req.cookies.empty_string;
+            const add_work_fail = req.cookies.add_work_failed
+
+            if(req.cookies.add_work_failed === undefined){
+                console.log(req.cookies.add_work_failed)
+                res.cookie('add_work_failed', {"status": false})
+            } else if(req.cookies.add_work_failed.status === true){
+                setTimeout(() => {
+                    req.cookies.add_work_failed.status = false;
+                }, 5000)
+            }
 
             if(req.cookies.name === undefined || req.cookies.id === undefined){
                 res.redirect(`/log`);
             } else {
-                res.render(createPath(file_name), {id, group_title, work, emptyGroup, login, opened_group, work_date});
+                res.render(createPath(file_name), {id, group_title, work, emptyGroup, login, opened_group, work_date, empty_string_failed, add_work_fail});
             }
 
         } else {
@@ -272,6 +315,10 @@ app.post('/log',(req, res) => {
         if(Array.isArray(result) && result.length > 0){
             res.cookie('name', result[0].login)
             res.cookie('id', result[0].id)
+            if(req.cookies.add_work_failed === undefined){
+                console.log(req.cookies.add_work_failed)
+                res.cookie('add_work_failed', {"status": false})
+            }
             res.redirect(`/`)
         } else {
             console.log(err)
@@ -323,8 +370,13 @@ app.get('/exit', (req, res) => {
 app.get('/notification', (req, res) => {
     const login = req.cookies.name
     const group_title = req.cookies.groups;
-    const opened_group = req.cookies.opened_group
-    res.render(createPath('notification'), { login, group_title, opened_group })
+    const opened_group = req.cookies.opened_group;
+
+    const add_work_fail = res.cookie('add_work_failed', {"status": false});
+
+    console.log(add_work_fail)
+
+    res.render(createPath('notification'), { login, group_title, opened_group, add_work_fail})
 })
 
 
@@ -332,11 +384,14 @@ app.get('/notification', (req, res) => {
 app.get('/user', (req, res) => {
     const login = req.cookies.name
     let group_title = req.cookies.groups;
-    const opened_group = req.cookies.opened_group
-    res.render(createPath('user'), { login, group_title, opened_group });
+    const opened_group = req.cookies.opened_group;
+
+    const add_work_fail = res.cookie('add_work_failed', {"status": false});
+
+    res.render(createPath('user'), { login, group_title, opened_group, add_work_fail });
 })
 
-app.get('/user/changelog', (req, res) => {
+app.get('/user/changelog', async(req, res) => {
     const login = req.cookies.name
     let group_title = req.cookies.groups;
     const opened_group = req.cookies.opened_group
@@ -388,6 +443,11 @@ app.post('/add_work', async(req, res) =>{
 
 
 
+    console.log('\n\nI\'m in add_work' )
+    console.log(work_date.split('T'))
+    console.log('\n\n')
+
+
     const user_id = req.cookies.id;
     let subtask = body.sub_task_element;
 
@@ -399,42 +459,56 @@ app.post('/add_work', async(req, res) =>{
 
             console.log(`Set date: ` + work_date)
 
-            let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.work`} (${`id`}, ${`group_id`}, ${`work_title`}, ${`work_time`}, ${`work_date`}) VALUES (NULL, ${group_id}, '${work_title}', '${work_time}', '${work_date}');`;
+            const query_select = `SELECT * FROM ${`b3afpl13xoea4hd5vw9r.work`} WHERE user_id = ${user_id} AND work_time = '${work_date.split("T")[1]}' AND work_date = '${work_date.split("T" )[0]}'`
 
-            conn.query(query, (error) => {
-                if(!error){
-                    console.log("All ok")
-                    res.redirect(`/0`);
+            conn.query(query_select, (error, result) => {
+                if(!error && result === []){
+                    console.log('\nResult\n')
+                    console.log(result)
+
+                    let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.work`} (${`id`}, ${`group_id`}, ${`user_id`}, ${`work_title`}, ${`work_time`}, ${`work_date`}) VALUES (NULL, ${group_id}, ${user_id}, '${work_title}', '${work_date.split('T')[1]}', '${work_date.split('T')[0]}');`;
+
+                    conn.query(query, (error) => {
+                        if(!error){
+                            console.log("All ok")
+                            res.redirect(`/0`);
+                        } else {
+                            console.log(error)
+                        }
+                    })
+
+                    if(subtask){
+                        let select_query = `SELECT id FROM ${`b3afpl13xoea4hd5vw9r.work`} ORDER BY \`work\`.\`id\` DESC LIMIT 1`;
+                        let work_id = 0;
+                        conn.query(select_query, (error, result) => {
+                            if(error){
+                                console.log(error)
+                            }
+                            work_id = result[0].id;
+                            console.log(Array(body.sub_task_element))
+                            if(Array.isArray(body.sub_task_element)){
+
+                                body.sub_task_element.forEach(elem => {
+                                    subwork(work_id, elem);
+                                })
+
+                            } else {
+                                subwork(work_id, body.sub_task_element);
+                            }
+
+
+                        })
+                    }
                 } else {
-                    console.log(error)
+                    res.cookie('add_work_failed', {"error": "It's time busy", "status": true})
+                    
+                    res.redirect('/0')
                 }
             })
 
-            if(subtask){
-                let select_query = `SELECT id FROM ${`b3afpl13xoea4hd5vw9r.work`} ORDER BY \`work\`.\`id\` DESC LIMIT 1`;
-                let work_id = 0;
-                conn.query(select_query, (error, result) => {
-                    if(error){
-                        console.log(error)
-                    }
-                    work_id = result[0].id;
-                    console.log(Array(body.sub_task_element))
-                    if(Array.isArray(body.sub_task_element)){
-
-                        body.sub_task_element.forEach(elem => {
-                            subwork(work_id, elem);
-                        })
-
-                    } else {
-                        subwork(work_id, body.sub_task_element);
-                    }
-
-
-                })
-            }
-
         } else {
             console.log(err)
+            res.redirect('/0')
         }
     })
 })
@@ -446,16 +520,24 @@ app.post('/add_work', async(req, res) =>{
 
     let group_title = body.group_name;
 
-    let user_id = req.cookies.id
+    let user_id = req.cookies.id;
 
-    let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.groups`} (${`id`}, ${`user_id`}, ${`group_title`}) VALUES (NULL, ${user_id}, '${group_title}')`;
-    conn.query(query, (err) => {
-        if(err){
-            console.log(err);
-        } else {
-            res.redirect('/0')
-        }
-    })
+     res.cookie('empty_string', false)
+
+    if(group_title === ''){
+        res.cookie('empty_string', true)
+        res.redirect('/0')
+    } else{
+        res.cookie('empty_string', false)
+        let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.groups`} (${`id`}, ${`user_id`}, ${`group_title`}) VALUES (NULL, ${user_id}, '${group_title}')`;
+        conn.query(query, (err) => {
+            if(err){
+                console.log(err);
+            } else {
+                res.redirect('/0')
+            }
+        })
+    }
 })
 
 //Delete subtask and if it's need all task

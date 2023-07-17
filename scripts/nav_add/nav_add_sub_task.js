@@ -34,10 +34,17 @@ subWorkAddBtn.addEventListener("click", () => {
 
     }
 
+    console.log(deleteTask)
+
     deleteTask.forEach((element, index) => {
+
         element.addEventListener("click", () => {
+            let key = -(deleteTask.length - (index - 1));
+            console.log(key)
             if(index !== 0){
+                console.log(subTaskItem[index])
                 subTaskItem[index].remove();
+                deleteTask[index].remove()
             } else if(index === 0){
                 subTaskWrapper.classList.remove("sub_open");
             }
