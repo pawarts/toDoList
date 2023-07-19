@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /*const context_menu_main = document.querySelector(".context_menu-wrapper");*/
 
 
@@ -61,7 +61,7 @@ document.body.addEventListener("click", (e) => {
 })
 
 
-=======
+
 const context_menu = document.querySelector(".context_menu-wrapper");
 
 
@@ -88,5 +88,3 @@ document.body.addEventListener("click", (e) => {
         context_menu.style.display = "none";
     }
 })
-
->>>>>>> be1f08286f776017f636dcbb98159e70aaf72780

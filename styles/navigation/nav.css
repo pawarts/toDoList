@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .nav_block {
     max-width: 100%;
     position: fixed;
@@ -184,7 +184,7 @@
 
 .no_active_icon{
     display: none;
-=======
+}
 .nav_block {
     max-width: 100%;
     position: fixed;
@@ -370,5 +370,4 @@
 
 .no_active_icon{
     display: none;
->>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
 }

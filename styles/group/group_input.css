@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .group_input-wrapper{
     display: flex;
     max-height: 21px;
@@ -19,8 +18,7 @@
 }
 
 .group_input-wrapper button{
-    cursor: pointer;
-=======
+    cursor: pointer;}
 .group_input-wrapper{
     display: flex;
     max-height: 21px;
@@ -37,5 +35,4 @@
 .group_input{
     max-height: 21px;
     width: 15px;
->>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
 }

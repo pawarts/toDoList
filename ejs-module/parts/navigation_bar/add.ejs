@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <div class="add_block" id="add_block">
     <div class="add_block_items">
         <form action="/add_work" method="POST" class="add_block_item">
@@ -58,65 +58,4 @@
 
         </form>
     </div>
-=======
-<div class="add_block" id="add_block">
-    <div class="add_block_items">
-        <form action="/add_work" method="POST" class="add_block_item">
-            <input type="text" maxlength="20" class="add_task_input" placeholder="Введіть завдання" name="work_title">
-
-            <div class="sub_task_wrapper" id="sub_task_wrapper">
-
-                <div class="sub_task_item" id="add_sub_task_input">
-                    <input type="text" class="add_sub_task_input" maxlength="20" placeholder="Введіть підзадачу" name="sub_task_element">
-                    <p class="delete_task">X</p>
-                </div>
-            </div>
-
-            <div class="add_task-btn_wrapper">
-                <div class="category_wrap">
-                    <select class="category_choose-items" name="group" id="category_choose-items">
-
-                        <option class="category_choose-title" id="category_title" value="">Без категорії</option>
-
-                        <%group_title.forEach((element, index) =>{%>
-                            <option class="category_choose-item" value="<%- element.title%>"><%- element.title %></option>
-                        <%})%>
-                    </select>
-                </div>
-                <div class="btn_wrap">
-                    <img src="../../images/add_task_icon/persons.svg" alt="" class="btn_ico">
-
-
-                    <img src="../../images/add_task_icon/calendar.svg" alt="" class="btn_ico" id="date_time">
-                    <div class="set_time open_block" id="set_calendar_block">
-                        <div class="time_wrap" id="calendar_wrap">
-                            <input class="time_item" type="date" name="calendar">
-                        </div>
-                        <div class="button_wrap">
-                            <p class="button_cancel" id="date_cancel_btn">Відмінити</p>
-                            <button class="button_submit" id="date_submit_btn">Підтвердити</button>
-                        </div>
-                    </div>
-
-
-                    <img src="../../images/add_task_icon/alarm.svg" alt="" class="btn_ico" id="button_time">
-                    <div class="set_time open_block" id="set_time_block">
-                        <div class="time_wrap" id="time_wrap">
-                            <input class="time_item" type="time" name="time">
-                        </div>
-                        <div class="button_wrap">
-                            <p class="button_cancel" id="button_cancel">Відмінити</p>
-                            <button class="button_submit" id="button_submit">Підтвердити</button>
-                        </div>
-                    </div>
-
-
-                    <img src="../../images/add_task_icon/git-branch-outline.svg" alt="" class="btn_ico sub_work_add_btn" id="sub_work_add_btn">
-                </div>
-                <button type="submit" class="add_submit">Додати</button>
-            </div>
-
-        </form>
-    </div>
->>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
 </div>

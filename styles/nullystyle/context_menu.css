@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .context_menu-wrapper{
     display: none;
     position: absolute;
@@ -18,12 +18,12 @@
     font-size: 13px;
 }
 
-#groups_contextmenu{
+#groups_contextmenu {
     display: none;
     position: absolute;
     top: 0;
     left: 0;
-=======
+}
 .context_menu-wrapper{
     display: none;
     position: absolute;
@@ -41,5 +41,4 @@
 
 .context_menu-wrapper .context_menu-items .context_menu-text{
     font-size: 13px;
->>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
 }

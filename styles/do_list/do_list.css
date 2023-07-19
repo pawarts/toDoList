@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .group_wrapper{
     display: flex;
     padding-left: 22px;
@@ -190,7 +190,6 @@
 .work_date:not(:first-child){
     margin-top: 50px;
 }
-=======
 .group_wrapper{
     position: relative;
     display: flex;
@@ -373,4 +372,3 @@
     color: #ffffff;
     border-radius: 4px;
 }
->>>>>>> be1f08286f776017f636dcbb98159e70aaf72780
