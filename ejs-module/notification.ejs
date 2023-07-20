@@ -3,7 +3,10 @@
 </head>
 <body>
    <div class="wrapper">
+
        <%-include("./parts/header.ejs")%>
+
+        <% if(false){%>
 
        <div class="wrapper_notifications">
            <div class="wrapper_notification">
@@ -44,7 +47,13 @@
            </div>
        </div>
 
+       <% } else {%>
+            <h3 class="wrapper_notifications">Пробачте, сторінка, поки не доступна.
+            </h3>
+       <%}%>
+
        <%- include("./parts/navigation_bar/nav.ejs")%>
+
    </div>
 </body>
 <%- include("./parts/end.ejs") %>
