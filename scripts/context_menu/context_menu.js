@@ -12,6 +12,9 @@ function openContextMenu (context_menu_name, event){
 
     if(context_menu.style.display === "none" || context_menu.style.display === "") {
         context_menu.style.display = "block";
+
+        console.log(`Display: ${context_menu.style}`)
+        console.log(context_menu_name.style)
     }
 
     context_menu.style.top = `${event.clientY}px`;
@@ -38,6 +41,7 @@ document.body.addEventListener("contextmenu", (event) => {
     event.preventDefault();
 
     console.log(`Y:${event.clientY}, X:${event.clientX}`);
+    console.log(`${event.target.classList.contains("group_link")}`);
 
     if(event.target.classList.contains("group_link")){
         openContextMenu(document.querySelector(".context_menu"), event);
