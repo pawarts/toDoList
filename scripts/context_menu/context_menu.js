@@ -6,15 +6,19 @@
 
 //context_menu.style.display = "none";
 
-function openContextMenu (context_menu_name, event){
+function openContextMenu (context_menu_name, other_context_menu, event){
 
     const context_menu = context_menu_name;
+    console.log((context_menu.style.display === "none" || context_menu.style.display === "") && (other_context_menu.style.display === "none" || other_context_menu.style.display === ""))
 
-    if(context_menu.style.display === "none" || context_menu.style.display === "") {
+    if((context_menu.style.display === "none" || context_menu.style.display === "") && (other_context_menu.style.display === "none" || other_context_menu.style.display === "")) {
         context_menu.style.display = "block";
+    }
 
-        console.log(`Display: ${context_menu.style}`)
-        console.log(context_menu_name.style)
+    if(event.target.classList.contains("group_link")){
+        context_menu.style.top = `${event.clientY + 10}px`;
+        context_menu.style.left= `${event.clientX + 10}px`;
+        return
     }
 
     context_menu.style.top = `${event.clientY}px`;
@@ -30,9 +34,11 @@ function closerContextMenu (context_menu_name, event) {
 
     const target = event.target;
 
+    console.log("I'm try to close this context menu")
     console.log(context_menu_name.style.display)
 
-    if((target !== ".context_menu-wrapper" || target !== ".context_menu") && context_menu_name.style.display === "block") {
+    if((target !== ".context_menu-wrapper" || target !== ".context_menu") && context_menu_name.style.display === "block" || context_menu_name.style.display === "") {
+        console.log("I wanna close context menu")
         context_menu_name.style.display = "none";
     }
 }
@@ -40,15 +46,20 @@ function closerContextMenu (context_menu_name, event) {
 document.body.addEventListener("contextmenu", (event) => {
     event.preventDefault();
 
-    console.log(`Y:${event.clientY}, X:${event.clientX}`);
-    console.log(`${event.target.classList.contains("group_link")}`);
+    //console.log(`Y:${event.clientY}, X:${event.clientX}`);
 
     if(event.target.classList.contains("group_link")){
-        openContextMenu(document.querySelector(".context_menu"), event);
+
+        document.getElementById("groups_id").attributes["value"].value = event.target.getAttribute("data-group-id");
+        console.log(document.getElementById("groups_id").getAttribute("value"))
+
+        openContextMenu(document.querySelector(".context_menu"), document.querySelector(".context_menu-wrapper"), event);
         return 0;
     }
 
-    openContextMenu(document.querySelector(".context_menu-wrapper"), event);
+    console.log("I'm after group delete")
+
+    openContextMenu(document.querySelector(".context_menu-wrapper"), document.querySelector(".context_menu"), event);
 })
 
 
@@ -92,3 +103,8 @@ document.body.addEventListener("click", (e) => {
         context_menu.style.display = "none";
     }
 })
+
+
+function loop (element){
+
+}

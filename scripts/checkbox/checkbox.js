@@ -66,6 +66,8 @@ const closeSubWork = (taskGroupCount, subWorksGroupCount) => {
 //Style for check
 const checker = (elementInput, elementChecked, elementText, elementSubWorkItem, taskGroupCount, subWorksGroupCount) => {
 
+    console.log('iygyu8')
+
     elementInput.addEventListener("click", () => {
         elementChecked.classList.toggle("checkbox_check")
         elementText.classList.toggle("checkbox_check_text")
@@ -85,7 +87,9 @@ const loops = () => {
         elementWorkItem = work_item[i];
         elementSubWorkItems = subWorkItems[i];
 
+
         if(i > 0){
+
             elementSubWorkItems.classList.remove("opened");
             open_count = 1;
         }

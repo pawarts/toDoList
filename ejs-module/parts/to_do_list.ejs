@@ -14,12 +14,13 @@
         <% group_title.forEach((element, index) => {%>
 
             <li class="group_item <% if(id === element.title){%>active<%}%>">
-                <a href="<%- element.title %>" class="group_link group_text"><%- element.title %></a>
-                <form action="" method="DELETE" class="context_menu" id="groups_contextmenu">
-                    <input type="hidden" value="<%- element.id%>">
-                    <button id="button_delete_group">Видалити</button>
-                </form>
+                <a href="<%- element.title %>" class="group_link group_text" data-group-id="<%- element.id %>"><%- element.title %></a>
             </li>
+
+            <form action="/delete/group" method="POST" class="context_menu" id="groups_contextmenu">
+                <input type="hidden" value="<%- element.id%>" name="groups_id" id="groups_id">
+                <button id="button_delete_group">Видалити</button>
+            </form>
 
         <%}) %>
 

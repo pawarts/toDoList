@@ -161,7 +161,7 @@ function arrayIncludesCondition ( array, includes){
         const array_group_id = array[index].group_id;
         const array_date = array[index].work_date;
 
-        if(group_id === array_group_id && date === date){
+        if(group_id == array_group_id && date === array_date){
             return true
         }
 
@@ -175,7 +175,7 @@ function request_result (id, res, req, file_name) {
     let login = req.cookies.name;
     let user_id = req.cookies.id;
 
-    console.log(`User: ${login}\nID:${user_id}`)
+    //console.log(`User: ${login}\nID:${user_id}`)
 
     let query = `
     SELECT GROUP_CONCAT( DISTINCT groups.group_title) AS group_title, groups.id, work.group_id, work.id AS work_id, work.work_title, work.work_time, work.work_date,
@@ -193,6 +193,7 @@ function request_result (id, res, req, file_name) {
 
     conn.query(query, (err, result) => {
         if(!err){
+
             result.forEach((element) => {
 
                 if(!group_title[0].includes(element.id)){
@@ -253,7 +254,7 @@ function request_result (id, res, req, file_name) {
             res.cookie('groups', group_title)
 
             if(group_title[0] !== null && group_title[0] !== undefined){
-                console.log(group_title[0].title)
+                //console.log(group_title[0].title)
                 res.cookie('first_group', group_title[0].title)
             } else {
                 res.cookie('first_group', '0')
@@ -265,7 +266,7 @@ function request_result (id, res, req, file_name) {
             const add_work_fail = req.cookies.add_work_failed
 
             if(req.cookies.add_work_failed === undefined){
-                console.log(req.cookies.add_work_failed)
+                //console.log(req.cookies.add_work_failed)
                 res.cookie('add_work_failed', {"status": false})
             } else if(req.cookies.add_work_failed.status === true){
                 setTimeout(() => {
@@ -288,9 +289,8 @@ function request_result (id, res, req, file_name) {
     return 0;
 }
 
-function subwork(work_id, element){
-    console.log(element)
-    let sub_insert_query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.subwork`} (${`id`}, ${`work_id`}, ${`subwork_title`}, ${`subwork_status`}) VALUES (NULL, ${work_id}, '${element}', 0);`
+function subwork(work_id, group_id, element){
+    let sub_insert_query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.subwork`} (${`id`}, ${`work_id`}, ${`group_id`}, ${`subwork_title`}, ${`subwork_status`}) VALUES (NULL, ${work_id}, ${group_id}, '${element}', 0);`
 
     conn.query(sub_insert_query, (error) => {
         if(error){
@@ -316,7 +316,6 @@ app.post('/log',(req, res) => {
             res.cookie('name', result[0].login)
             res.cookie('id', result[0].id)
             if(req.cookies.add_work_failed === undefined){
-                console.log(req.cookies.add_work_failed)
                 res.cookie('add_work_failed', {"status": false})
             }
             res.redirect(`/`)
@@ -434,18 +433,10 @@ app.post('/add_work', async(req, res) =>{
     const work_title = body.work_title;
     const work_group = body.group;
 
-    console.log("ID:" + work_group);
-
     const work_time = body.time;
     const work_date = body.calendar;
 
     let group_id;
-
-
-
-    console.log('\n\nI\'m in add_work' )
-    console.log(work_date.split('T'))
-    console.log('\n\n')
 
 
     const user_id = req.cookies.id;
@@ -462,10 +453,8 @@ app.post('/add_work', async(req, res) =>{
             const query_select = `SELECT * FROM ${`b3afpl13xoea4hd5vw9r.work`} WHERE user_id = ${user_id} AND work_time = '${work_date.split("T")[1]}' AND work_date = '${work_date.split("T" )[0]}'`
 
             conn.query(query_select, (error, result) => {
-                if(!error && result === []){
-                    console.log('\nResult\n')
-                    console.log(result)
 
+                if(!error && result.length === 0){
                     let query = `INSERT INTO ${`b3afpl13xoea4hd5vw9r.work`} (${`id`}, ${`group_id`}, ${`user_id`}, ${`work_title`}, ${`work_time`}, ${`work_date`}) VALUES (NULL, ${group_id}, ${user_id}, '${work_title}', '${work_date.split('T')[1]}', '${work_date.split('T')[0]}');`;
 
                     conn.query(query, (error) => {
@@ -481,6 +470,7 @@ app.post('/add_work', async(req, res) =>{
                         let select_query = `SELECT id FROM ${`b3afpl13xoea4hd5vw9r.work`} ORDER BY \`work\`.\`id\` DESC LIMIT 1`;
                         let work_id = 0;
                         conn.query(select_query, (error, result) => {
+                            console.log('subtask')
                             if(error){
                                 console.log(error)
                             }
@@ -489,17 +479,21 @@ app.post('/add_work', async(req, res) =>{
                             if(Array.isArray(body.sub_task_element)){
 
                                 body.sub_task_element.forEach(elem => {
-                                    subwork(work_id, elem);
+                                    subwork(work_id, group_id, elem);
                                 })
 
                             } else {
-                                subwork(work_id, body.sub_task_element);
+                                subwork(work_id, group_id, body.sub_task_element);
                             }
 
 
                         })
                     }
                 } else {
+
+                    console.log(error ? error : result)
+                    console.log(error)
+
                     res.cookie('add_work_failed', {"error": "It's time busy", "status": true})
 
                     res.redirect('/0')
@@ -594,6 +588,50 @@ app.post('/delete_sub_task', (req, res) => {
     res.redirect('/0')
 
     console.log(delete_queue)
+})
+
+app.post('/delete/group', (req, res) => {
+    const body = req.body;
+
+    const group_id = body.groups_id;
+
+    console.log(group_id)
+
+    function deleteQueries(query, last) {
+        if(!errorCatcher){
+            conn.query(query, (error, result) => {
+                if(!error && last){
+                    res.redirect('/0')
+                } else {
+                    console.log(error)
+                    errorCatcher = true
+                    res.redirect('error_page/error')
+                }
+            })
+        }
+    }
+
+    let errorCatcher = false;
+
+
+    const select_query = `SELECT * FROM \`b3afpl13xoea4hd5vw9r\`.\`work\` WHERE \`work\`.\`group_id\` = ${group_id}`
+
+    const query_delete_group = `DELETE FROM \`b3afpl13xoea4hd5vw9r\`.\`groups\` WHERE \`groups\`.\`id\` = ${group_id}`;
+
+    conn.query(select_query, (error, result) => {
+        if(!error && result){
+            deleteQueries(query_delete_group, true, errorCatcher)
+        } else {
+            console.log(error)
+            deleteQueries(query_delete_group, false, errorCatcher)
+
+            const query_delete_work = `DELETE FROM \`b3afpl13xoea4hd5vw9r\`.\`work\` WHERE \`work\`.\`group_id\` = ${group_id}`;
+            deleteQueries(query_delete_work, false, errorCatcher)
+
+            const query_delete_subtask = `DELETE FROM \`b3afpl13xoea4hd5vw9r\`.\`subwork\` WHERE \`subwork\`.\`group_id\` = ${group_id}`;
+            deleteQueries(query_delete_subtask, true, errorCatcher)
+        }
+    })
 })
 
 
