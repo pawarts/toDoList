@@ -240,7 +240,7 @@ function request_result (id, res, req, file_name) {
 
                 const item = work[i]
 
-                if((item.group_id === id && item.title !== null)){
+                if(((item.group_id === id || id === '0') && item.title !== null)){
                     if(item.subworks !== []){
 
                         emptyGroup = true
@@ -248,6 +248,7 @@ function request_result (id, res, req, file_name) {
                     }
                 }
             }
+
 
             group_title.splice(0, 1)
 

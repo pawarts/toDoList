@@ -9,20 +9,23 @@
 function openContextMenu (context_menu_name, other_context_menu, event){
 
     const context_menu = context_menu_name;
-    console.log((context_menu.style.display === "none" || context_menu.style.display === "") && (other_context_menu.style.display === "none" || other_context_menu.style.display === ""))
+    console.log((context_menu.style.display === "none" || context_menu.style.display === "")  && (other_context_menu.style.display === "none" || other_context_menu.style.display === ""))
 
     if((context_menu.style.display === "none" || context_menu.style.display === "") && (other_context_menu.style.display === "none" || other_context_menu.style.display === "")) {
         context_menu.style.display = "block";
+        console.log(context_menu.style.display)
     }
 
-    if(event.target.classList.contains("group_link")){
-        context_menu.style.top = `${event.clientY + 10}px`;
-        context_menu.style.left= `${event.clientX + 10}px`;
-        return
-    }
 
     context_menu.style.top = `${event.clientY}px`;
     context_menu.style.left= `${event.clientX}px`;
+
+    if(event.target.classList.contains("group_link")){
+        console.log("I found group link")
+        console.log(context_menu)
+        context_menu.style.top = `${event.clientY + 20}px`;
+        context_menu.style.left= `${event.clientX + 20}px`;
+    }
 
     console.log(`Top: ${context_menu.style.top}`)
     console.log(`Left: ${context_menu.style.left}`)
@@ -84,7 +87,7 @@ const context_menu = document.querySelector(".context_menu-wrapper");
 
 //context_menu.style.display = "none";
 
-document.body.addEventListener("contextmenu", (event) => {
+/*document.body.addEventListener("contextmenu", (event) => {
     event.preventDefault();
 
     console.log(`X:${event.clientX}, Y:${event.clientY}`);
@@ -96,7 +99,7 @@ document.body.addEventListener("contextmenu", (event) => {
 
     context_menu.style.top = `${event.clientY}px`;
     context_menu.style.left= `${event.clientX}px`;
-})
+})*/
 
 document.body.addEventListener("click", (e) => {
     if(e.target != ".context_menu-wrapper" && context_menu.style.display === "block") {

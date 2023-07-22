@@ -88,8 +88,9 @@ const loops = () => {
         elementSubWorkItems = subWorkItems[i];
 
 
-        if(i > 0){
+        if(i > 0 && elementSubWorkItems !== undefined){
 
+            console.log(elementSubWorkItems)
             elementSubWorkItems.classList.remove("opened");
             open_count = 1;
         }

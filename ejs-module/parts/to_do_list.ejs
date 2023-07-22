@@ -17,9 +17,9 @@
                 <a href="<%- element.title %>" class="group_link group_text" data-group-id="<%- element.id %>"><%- element.title %></a>
             </li>
 
-            <form action="/delete/group" method="POST" class="context_menu" id="groups_contextmenu">
+            <form action="/delete/group" method="POST" class="context_menu groups_contextmenu" id="groups_contextmenu">
                 <input type="hidden" value="<%- element.id%>" name="groups_id" id="groups_id">
-                <button id="button_delete_group">Видалити</button>
+                <button class="button_delete_group" id="button_delete_group">Видалити</button>
             </form>
 
         <%}) %>
@@ -27,7 +27,7 @@
         <li class="group_item">
             <span class="group_link group_text" id="group_input-btn">Створити групу</span>
             <form class="group_input-wrapper" action="/add_group" method="POST" id="create_group_form">
-                <input class="group_input" maxlength="15" type="text" id="create_group_input" name="group_name" id="create_group_input" required>
+                <input class="group_input" minlength="1" maxlength="15" type="text" id="create_group_input" name="group_name" id="create_group_input" required>
                 <button type="submit">
                     <img src="../../images/navigation_block/add_noactive.svg" alt="">
                 </button>
@@ -44,9 +44,11 @@
 
                     <% work.forEach( (element) => {%>
 
-                        <% if(element.group_id === id){ %>
 
-                            <% if (element.date !== null){%>
+
+                        <% if(element.group_id === id || id === '0'){ %>
+
+                            <% if (element.date !== null && element.date !== 'null'){%>
                                 <p class="work_date"><%- `${element.date.split(' ')[0]}, ${element.date.split(' ')[1]} ${element.date.split(' ')[2]}`%></p>
                             <%}%>
 
