@@ -78,7 +78,7 @@
 /* Work style */
 
 .work_wrapper .work_items{
-    max-height: 65vh;
+    max-height: 65svh;
     overflow-y: scroll;
 }
 
