@@ -339,13 +339,12 @@ app.post('/log',(req, res) => {
 
     const {name, password} = req.body
 
-    res.cookie('add_work_failed', {"error": "", "status": false})
-
     let query = `SELECT  *  FROM ${`b3afpl13xoea4hd5vw9r.users`} WHERE login =  ? AND password = ?`
     conn.query(query, [name, password], (err, result) =>{
         if(Array.isArray(result) && result.length > 0){
             res.cookie('name', result[0].login)
             res.cookie('id', result[0].id)
+            res.cookie('add_work_failed', {"error": "", "status": false})
             res.redirect(`/`)
         } else {
             console.log(err)
