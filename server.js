@@ -135,7 +135,7 @@ app.use('/styles', express.static(__dirname + '/styles'))
 app.use('/images', express.static(__dirname + '/images'))
 app.use('/scripts', express.static(__dirname + '/scripts'))
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8800'); // Замініть на свій домен
+    res.header('Access-Control-Allow-Origin', 'https://justdoooooo.onrender.com'); // Замініть на свій домен
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
