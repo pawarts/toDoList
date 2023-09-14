@@ -90,6 +90,10 @@
     overflow: scroll;
 }
 
+.work_wrapper .work_items .work_item--empty_subworks{
+    grid-template-columns: 50px 1fr 1fr;
+}
+
 .work_wrapper .work_items .work_item .work_time{
     padding-right: 14px;
 
@@ -128,6 +132,12 @@
 
 .check_wrapper{
     position: relative;
+    top: 0;
+    left: 0;
+}
+
+.work_wrapper .work_items .work_item--empty_subworks .check_wrapper{
+    top: 15px;
 }
 
 .input_checkbox {

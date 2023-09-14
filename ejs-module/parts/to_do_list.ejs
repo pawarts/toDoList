@@ -27,8 +27,8 @@
         <li class="group_item">
             <span class="group_link group_text" id="group_input-btn">Створити групу</span>
             <form class="group_input-wrapper" action="/add_group" method="POST" id="create_group_form">
-                <input class="group_input" minlength="1" maxlength="15" type="text" id="create_group_input" name="group_name" id="create_group_input" required>
-                <button type="submit">
+                <input class="group_input" maxlength="15" type="text" id="create_group_input" name="group_name" id="create_group_input">
+                <button type="submit" class="fail_button" value="<%- add_work_fail.status %>">
                     <img src="../../images/navigation_block/add_noactive.svg" alt="">
                 </button>
             </form>
@@ -44,20 +44,31 @@
 
                     <% work.forEach( (element) => {%>
 
-
+                        <% if (element.date !== null && element.date !== 'null' && id === '0') {%>
+                            <p class="work_date"><%- `${element.date.split(' ')[0]}, ${element.date.split(' ')[1]} ${element.date.split(' ')[2]}`%></p>
+                        <%}%>
 
                         <% if(element.group_id === id || id === '0'){ %>
 
-                            <% if (element.date !== null && element.date !== 'null'){%>
+                            <% if (element.date !== null && element.date !== 'null' && id !== '0'){%>
                                 <p class="work_date"><%- `${element.date.split(' ')[0]}, ${element.date.split(' ')[1]} ${element.date.split(' ')[2]}`%></p>
                             <%}%>
 
-                            <li class="work_item">
+                            <% if(element.title !== null) {%>
+
+                            <li class="work_item <% if (element.subworks === '') { %>work_item--empty_subworks <% } %>">
                                 <p class="work_time work_times"><%- element.time %></p>
                                 <p class="work_time"><%- element.title%></p>
+                                <% if (element.subworks === '') { %>
+                                    <div class="check_wrapper">
+                                        <input class="input_checkbox work_checker" name="work_checker" value="<%- element.id%>" type="checkbox"/>
+                                        <input name="checker" value="off" type="hidden"/>
+                                        <div class="checkbox_uncheck"></div>
+                                    </div>
+                                <% } %>
                             </li>
 
-                            <%if(element.subworks != 0){%>
+                            <%if(element.subworks !== ''){%>
                             <div class="sub_work_items">
                                 <form action="/delete_sub_task" method="POST">
                                     <%element.subworks.forEach((subwork, index) => {%>
@@ -75,6 +86,8 @@
                                     <button class="delete_submit">Підтвердити</button>
                                 </form>
                             </div>
+                            <% } %>
+
                             <% } %>
 
                         <% } %>

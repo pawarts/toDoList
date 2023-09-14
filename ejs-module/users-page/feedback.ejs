@@ -1,0 +1,48 @@
+<%- include('../parts/file_header.ejs')%>
+<link rel="stylesheet" href="../../styles/login.css">
+<link rel="stylesheet" href="../../styles/user/feedback/feedback_style.css">
+
+</head
+<body>
+
+    <div class="wrapper">
+        <header>
+            <a href="/user"><img src="../../images/user_page/icon/back_button_icon.svg" alt=""></a>
+        </header>
+
+        <section class="feedback_section-wrapper">
+            <section class="feedback_section" id="feedback_section">
+                <section class="section_title">
+                    <h2 class="title">Знайшли помилку?</h2>
+                    <p class="subtitle">Напишіть нам...</p>
+                </section>
+
+                <form method="post" class="form_wrapper" id="send_feedback-form">
+                    <label class="form_input_label" for="send_feedback-email">Введіть пошту</label>
+                    <input type="email" id="send_feedback-email" name="email" class="form_input"><br>
+
+                    <label class="form_input_label" for="send_feedback-textarea">Ваш відгук</label>
+                    <textarea class="form_textarea" name="textarea" cols="30" rows="10" id="send_feedback-textarea"></textarea>
+                    <button type="submit" class="form_button_submit" id="send_feedback-button">Надіслати</button>
+                </form>
+            </section>
+
+            <section class="done_section_wrapper">
+
+                <img src="../../images/user_page/feedback/done_icon.svg" alt="">
+
+                <section class="section_title">
+                    <h2 class="title">Ваш відгук надіслано</h2>
+                    <p class="subtitle">Дякуємо за відгук</p>
+                </section>
+
+                <a href="/user" class="form_button_submit">Повернутись</a>
+
+            </section>
+        </section>
+        
+    </div>
+
+</body>
+<script src="../../scripts/feedback/feedback.js"></script>
+</html>

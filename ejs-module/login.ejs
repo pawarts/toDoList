@@ -2,6 +2,11 @@
 <link rel="stylesheet" href="../../styles/nullystyle.css">
 <link rel="stylesheet" href="../styles/login.css">
 <body>
+
+<div class="fail_wrapper" id="fail_wrapper">
+    <p><%- add_work_fail.error %></p>
+</div>
+
 <div class="login_wrapper">
     <h1 class="login_title">Увійти</h1>
     <form action="" method="POST" class="form_wrap">
@@ -10,11 +15,11 @@
             <input type="text" class="form_input" name="name" placeholder="Логін">
             <input type="password" class="form_input" name="password" placeholder="Пароль">
 
-            <a href="" class="hint_link">Забули пароль?</a>
+            <a href="/zabudko" class="hint_link">Забули пароль?</a>
 
         </div>
 
-        <button type="submit" class="sub_btn">Увійти</button>
+        <button type="submit" class="sub_btn fail_button" value="<%- add_work_fail.status %>">Увійти</button>
 
     </form>
     <footer class="login_footer">
@@ -22,5 +27,7 @@
         <a href="/reg" class="login_footer_link">Зареєструватись</a>
     </footer>
 </div>
+
+<script src="../scripts/fail_notification.js"></script>
 </body>
 </html>

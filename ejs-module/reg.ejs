@@ -1,25 +1,28 @@
 <%- include('./parts/file_header.ejs')%>
-<link rel="stylesheet" href="../../styles/nullystyle.css">
+<link rel="stylesheet" href="../../styles/nullystyle/nullystyle.css">
 <link rel="stylesheet" href="../styles/login.css">
 <body>
+<div class="fail_wrapper" id="fail_wrapper">
+    <p><%- add_work_fail.error %></p>
+</div>
 <div class="login_wrapper">
     <h1 class="login_title">Реєстрація</h1>
     <form action="/reg" method="post" class="form_wrap">
         <div class="input_wrap">
             <div class="input_items">
-                <input type="text" class="form_input" name="login" placeholder="Введіть ім'я користувача">
+                <input type="text" class="form_input" name="login" maxlength="32" placeholder="Введіть ім'я користувача">
             </div>
             <div class="input_items">
-                <input type="email" class="form_input" name="email" placeholder="Пошта">
+                <input type="email" class="form_input" name="email" maxlength="32" placeholder="Пошта">
             </div>
             <div class="input_items">
-                <input type="text" class="form_input" name="password" placeholder="Пароль">
-                <input type="text" class="form_input" name="password" placeholder="Повторіть пароль">
+                <input type="text" class="form_input" name="password" maxlength="32" placeholder="Пароль">
+                <input type="text" class="form_input" name="password" maxlength="32" placeholder="Повторіть пароль">
             </div>
 
         </div>
 
-        <button type="submit" class="sub_btn">Зареєструватись</button>
+        <button type="submit" class="sub_btn fail_button" value="<%- add_work_fail.status %>">Зареєструватись</button>
 
     </form>
     <footer class="login_footer">
@@ -27,4 +30,6 @@
         <a href="/log" class="login_footer_link">Увійти</a>
     </footer>
 </div>
+<script src="../scripts/fail_notification.js"></script>
 </body>
+</html>

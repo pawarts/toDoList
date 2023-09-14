@@ -1,6 +1,7 @@
 
 body{
     overflow-x: hidden;
+    padding-bottom: 40px;
 }
 
 .user_wrapper{
@@ -33,6 +34,10 @@ body{
     margin: 30px 0;
 }
 
+.change_list{
+    margin-bottom: 40px;
+}
+
 .change_list_item{
     position: relative;
     top: 0;
@@ -50,10 +55,6 @@ body{
     height: 5px;
     border-radius: 50%;
     background: #000000;
-}
-
-.change_wrapper:first-child{
-    margin-top: 75px;
 }
 
 .change_text{
@@ -82,6 +83,7 @@ body{
 .user_link{
     display: flex;
     justify-content: space-between;
+    margin-top: 21px;
 }
 
 .user_window_title{
@@ -120,6 +122,10 @@ body{
 
 .change_wrapper:first-child{
     margin-top: 75px;
+}
+
+.change_wrapper:last-child{
+    margin-bottom: 75px;
 }
 
 .change_text{

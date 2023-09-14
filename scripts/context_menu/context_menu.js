@@ -13,7 +13,6 @@ function openContextMenu (context_menu_name, other_context_menu, event){
 
     if((context_menu.style.display === "none" || context_menu.style.display === "") && (other_context_menu.style.display === "none" || other_context_menu.style.display === "")) {
         context_menu.style.display = "block";
-        console.log(context_menu.style.display)
     }
 
 
@@ -21,8 +20,6 @@ function openContextMenu (context_menu_name, other_context_menu, event){
     context_menu.style.left= `${event.clientX}px`;
 
     if(event.target.classList.contains("group_link")){
-        console.log("I found group link")
-        console.log(context_menu)
         context_menu.style.top = `${event.clientY + 20}px`;
         context_menu.style.left= `${event.clientX + 20}px`;
     }
@@ -36,9 +33,6 @@ function openContextMenu (context_menu_name, other_context_menu, event){
 function closerContextMenu (context_menu_name, event) {
 
     const target = event.target;
-
-    console.log("I'm try to close this context menu")
-    console.log(context_menu_name.style.display)
 
     if((target !== ".context_menu-wrapper" || target !== ".context_menu") && context_menu_name.style.display === "block" || context_menu_name.style.display === "") {
         console.log("I wanna close context menu")
