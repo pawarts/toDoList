@@ -43,7 +43,7 @@ forget_password_email_send.addEventListener("submit", (event) => {
     const data_object = Object.fromEntries(formData)
 
     if(data_object.email.length !== 0){
-        fetch('http://localhost:8800/forget_password_email', {
+        fetch('/forget_password_email', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

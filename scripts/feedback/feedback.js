@@ -12,7 +12,7 @@ send_feedback_form.addEventListener("submit", (event) => {
     const formData = new FormData(send_feedback_form);
     const data_object = Object.fromEntries(formData)
 
-    fetch('http://localhost:8800/user/send_feedback', {
+    fetch('/user/send_feedback', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
