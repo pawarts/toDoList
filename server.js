@@ -134,6 +134,12 @@ app.listen(PORT, (error) => {
 app.use('/styles', express.static(__dirname + '/styles'))
 app.use('/images', express.static(__dirname + '/images'))
 app.use('/scripts', express.static(__dirname + '/scripts'))
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8800'); // Замініть на свій домен
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
 app.use(express.json())
 app.use(cookieParser());
 
@@ -321,11 +327,11 @@ function subwork(work_id, group_id, element){
 //Login page
 app.get('/log', (req, res) => {
 
-    res.cookie("add_work_failed", {error: "", "status": false})
+    res.cookie("add_work_failed", {"error": "", "status": false})
 
     const add_work_fail = req.cookies.add_work_failed
 
-    if(add_work_fail.error !== undefined){
+    if(add_work_fail.error !== undefined && add_work_fail.error !== ''){
         if(add_work_fail.error !=='Неправильний логін або пароль'){
             res.cookie("add_work_failed", { "error": "", "status": false })}
     }
